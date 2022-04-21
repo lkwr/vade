@@ -44,11 +44,7 @@ export const validate = <T extends abstract new (...args: any[]) => any>(
 
     const emptyInstance = Reflect.construct(Class, []);
 
-    for (const key of Object.keys(emptyInstance)) {
-        if (obj[key] === undefined) {
-            obj[key] = undefined;
-        }
-    }
+    obj = { ...emptyInstance, ...obj };
 
     if (validators === undefined) {
         return null;
