@@ -1,4 +1,9 @@
-import { createValidator } from './validate.ts';
+import { createValidator, validate } from './validate.ts';
+
+// deno-lint-ignore no-explicit-any
+export const IsValid = createValidator((model: abstract new (...args: any[]) => any) => {
+    return (prop) => validate(prop, model) !== null;
+});
 
 export const IsEquals = createValidator((prop) => {
     return (_prop) => _prop == prop;
