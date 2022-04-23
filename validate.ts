@@ -35,14 +35,15 @@ export const Validate = (validate: ValidateFunction): PropertyDecorator => {
 
 export const validate = <T extends abstract new (...args: any[]) => any>(
     obj: InstanceType<T>,
-    Class: T
+    Class: T,
+    ...classParams: ConstructorParameters<T>
 ): InstanceType<T> | null => {
     const validators = Object.getOwnPropertyDescriptor(Class.prototype, ValidateSymbol)
         ?.value as ValidateInfo | undefined;
 
     let valid = true;
 
-    const emptyInstance = Reflect.construct(Class, []);
+    const emptyInstance = Reflect.construct(Class, classParams);
 
     obj = { ...emptyInstance, ...obj };
 
